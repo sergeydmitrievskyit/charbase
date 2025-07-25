@@ -1,7 +1,6 @@
 import { ConfirmDialog } from 'primereact/confirmdialog';
 
 interface DeletePopupProps {
-    visible: boolean;
     name: string;
     onHide: () => void;
     onAccept: () => void;
@@ -9,14 +8,13 @@ interface DeletePopupProps {
 }
 
 export const DeletePopup = ({
-    visible,
     name,
     onHide,
     onAccept,
     onReject
 }: DeletePopupProps) => (
     <ConfirmDialog
-        visible={visible}
+        visible={true}
         onHide={onHide}
         message={`Are you sure you want to delete ${name}`}
         header="Delete"

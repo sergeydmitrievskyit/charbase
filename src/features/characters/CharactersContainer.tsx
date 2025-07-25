@@ -6,11 +6,14 @@ import { useEffect } from 'react';
 import {
     charactersReceived,
     characterRemoved,
+    characterUpdated,
     charactersSelectors
 } from './charactersSlice';
 import { Table } from './components/Table';
 import { DeletePopup } from './components/DeletePopup';
-import { Character } from '../../types/character';
+import { Character, CharacterEditForm } from '../../types/character';
+import { EditFormPopup } from './components/EditFormPopup';
+
 
 export const CharactersContainer = () => {
     const dispatch = useAppDispatch();
@@ -21,8 +24,9 @@ export const CharactersContainer = () => {
         data
     } = useGetCharactersQuery();
     const characters = useAppSelector(charactersSelectors.selectAll)
+    
     const [characterToDelete, setCharacterToDelete] = useState<Character | null>(null);
-    const [deletePopupVisible, setDeletePopupVisible] = useState<boolean>(false);
+    const [characterToEdit, setCharacterToEdit] = useState<Character | null>(null);
 
     useEffect(() => {
         if (data) {
@@ -32,12 +36,10 @@ export const CharactersContainer = () => {
 
     const handleDeleteButtonClick = (character: Character) => {
         setCharacterToDelete(character);
-        setDeletePopupVisible(true);
     }
 
     const handleDeleteReject = () => {
         setCharacterToDelete(null);
-        setDeletePopupVisible(false);
     }
 
     const handleDeleteConfirm = () => {
@@ -47,11 +49,24 @@ export const CharactersContainer = () => {
 
         dispatch(characterRemoved(characterToDelete.id));
         setCharacterToDelete(null)
-        setDeletePopupVisible(false);
     }
 
     const handleEditButtonClick = (character: Character) => {
-        console.log(character);
+        setCharacterToEdit(character);
+    }
+
+    const handleEditSubmit = (characterChanges: CharacterEditForm) => {
+        if(!characterToEdit) {
+            return
+        }
+        
+        dispatch(characterUpdated({
+            id: characterToEdit.id,
+            changes: {
+                ...characterChanges
+            } 
+        }
+        ))
     }
 
     if (isUninitialized || isLoading) {
@@ -64,12 +79,17 @@ export const CharactersContainer = () => {
 
     return (
         <div>
-            <DeletePopup
-                visible={deletePopupVisible}
-                name={characterToDelete ? characterToDelete.name : ''}
+            { characterToDelete && <DeletePopup
+                name={characterToDelete.name}
                 onHide={handleDeleteReject}
                 onAccept={handleDeleteConfirm}
-                onReject={handleDeleteReject}/>
+                onReject={handleDeleteReject}/> }
+
+            { characterToEdit && <EditFormPopup
+                onHide={() => setCharacterToEdit(null)}
+                character={characterToEdit}
+                onSubmit={handleEditSubmit}/>
+            }
 
             <Table
                 characters={characters}

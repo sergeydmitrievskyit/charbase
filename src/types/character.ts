@@ -3,3 +3,8 @@ export interface Character {
     name: string,
     categories: string[]
 }
+
+export interface CharacterEditForm {
+    name: string,
+    categories: string[]
+}
