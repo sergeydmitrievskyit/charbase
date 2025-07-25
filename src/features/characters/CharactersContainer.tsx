@@ -6,8 +6,10 @@ import {
     charactersReceived,
     charactersSelectors
 } from './charactersSlice';
+import { Table } from './components/Table';
+import { Character, CharacterId } from '../../types/character';
 
-export const CharactersTableContainer = () => {
+export const CharactersContainer = () => {
     const dispatch = useAppDispatch();
     const {
         isLoading,
@@ -23,6 +25,15 @@ export const CharactersTableContainer = () => {
         }
     }, [data, dispatch]);
 
+    const handleEdit = (character: Character) => {
+        console.log(character);
+    }
+
+    const handleDelete = (id: CharacterId) => {
+        console.log(id)
+    }
+
+
     if (isUninitialized || isLoading) {
         return <p>Loading...</p>
     }
@@ -33,9 +44,10 @@ export const CharactersTableContainer = () => {
 
     return (
         <div>
-            {characters.map((character) => (
-                <p key={character.id}>{character.name}</p>
-            ))}
+            <Table
+                characters={characters}
+                onEdit={handleEdit}
+                onDelete={handleDelete} />
         </div>
     )
 }
