@@ -3,16 +3,9 @@ import {
     createEntityAdapter
  } from "@reduxjs/toolkit"
 import { RootState } from "../../app/store";
+import { Character } from "../../types/character";
 
-interface Character {
-    id: string,
-    name: string,
-    category: string[]
-}
-
-const charactersAdapter = createEntityAdapter<Character>({
-    sortComparer: (a, b) => a.name.localeCompare(b.name)
-})
+const charactersAdapter = createEntityAdapter<Character>()
 const initialState = charactersAdapter.getInitialState();
 
 export const charactersSlice = createSlice({
