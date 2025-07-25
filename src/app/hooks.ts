@@ -5,8 +5,8 @@
 // for importing and re-exporting the typed versions of hooks.
 /* eslint-disable no-restricted-imports */
 import { useDispatch, useSelector } from "react-redux"
-import type { AppStore, AppDispatch } from "./store"
+import type { RootState, AppDispatch } from "./store"
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
-export const useAppSelector = useSelector.withTypes<AppStore>()
+export const useAppSelector = useSelector.withTypes<RootState>()
