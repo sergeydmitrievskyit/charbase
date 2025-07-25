@@ -1,13 +1,13 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Actions } from './Actions';
-import { Character, CharacterId } from "../../../types/character";
+import { Character } from "../../../types/character";
 import { Chip } from "primereact/chip";
 
 interface TableProps {
     characters: Character[],
     onEdit: (character: Character) => void,
-    onDelete: (id: CharacterId) => void
+    onDelete: (character: Character) => void
 }
 
 export const Table = ({
@@ -28,7 +28,7 @@ export const Table = ({
     const actionsBodyTemplate = (character: Character) => (
         <Actions
             onEdit={() => onEdit(character)}
-            onDelete={() => onDelete(character.id)}/>
+            onDelete={() => onDelete(character)}/>
     )
 
     return (

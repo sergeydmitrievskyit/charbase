@@ -1,7 +1,5 @@
-export type CharacterId = number
-
 export interface Character {
-    id: CharacterId,
+    id: number,
     name: string,
     categories: string[]
 }
