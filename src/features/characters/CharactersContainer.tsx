@@ -83,7 +83,7 @@ export const CharactersContainer = () => {
     }
 
     if (isUninitialized || isLoading) {
-        return <p>Loading...</p>
+        return '<p>Loading...</p>'
     }
 
     if (isError) {

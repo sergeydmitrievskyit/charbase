@@ -29,7 +29,7 @@ export const EditFormPopup = ({
         formState: { errors },
         reset
     } = useForm<CharacterEditForm>({
-        mode: 'onSubmit'
+        mode: 'onChange'
     })
 
     useEffect(() => {
@@ -54,57 +54,73 @@ export const EditFormPopup = ({
             visible={true}
             onHide={handleCancel}
             header={`Edit ${character.name}`}
-            modal>
-            <form onSubmit={handleSubmit(handleFormSubmit)}>
-                <div>
-                    <div>
-                        <label htmlFor='name'>Name:</label>
-                        <InputText
-                            id='name'
-                            {...register('name', {
-                                required: 'Name is required',
-                                maxLength: {
-                                    value: 40,
-                                    message: 'Name is no longer 40 characters'
-                                }
-                            })}
-                            className={errors.name ? 'p-invalid' : ''}/>
-                        {errors.name && <small className="p-error">{errors.name.message}</small>}
-                    </div>
+            modal
+            className="w-full max-w-[80vw]">
+            <form
+                onSubmit={handleSubmit(handleFormSubmit)}
+                className="flex flex-col gap-4 p-1 sm:p-2">
+                
+                {/* Name input */}
+                <div className="flex flex-col gap-1">
+                    <label
+                        htmlFor='name'
+                        className="text-sm font-medium text-gray-700">
+                        Name:
+                    </label>
+                    <InputText
+                        id='name'
+                        {...register('name', {
+                            required: 'Name is required',
+                            maxLength: {
+                                value: 40,
+                                message: 'Maximum length 40 symbols'
+                            }
+                        })}
+                        className={`w-full ${errors.name ? 'p-invalid' : ''}`}/>
+                    {errors.name && <small className="p-error text-sm">{errors.name.message}</small>}
                 </div>
 
-                <div>
-                    <label htmlFor='categories'>Categories:</label>
+                {/* Categories input */}
+                <div className="flex flex-col gap-1">
+                    <label
+                        htmlFor='categories'
+                        className="text-sm font-medium text-gray-700">
+                        Categories:
+                    </label>
                     <Controller
                         name='categories'
                         control={control}
                         rules={{
-                            required: 'Choose at least one category',
+                            required: 'Minimum 1 category',
                             validate: (value) => {
                                 if (value && value.length > 5) {
-                                    return 'You can choose 5 categories maximum'
+                                    return 'Maximum 5 categories'
                                 }
                                 return true;
                             }
                         }}
-                        render={({field, fieldState}) => (
-                           <MultiSelect
-                                id='categories'
-                                value={field.value}
-                                onChange={(e) => {
-                                    field.onChange(e.value)
-                                }}
-                                options={CATEGORIES}
-                                display='chip'
-                                filter
-                                className={fieldState.error ? 'p-invalid' : ''}
-                            />
+                        render={({field}) => (
+                            <div className="w-full min-w-0 relative"> 
+                                <MultiSelect
+                                        id='categories'
+                                        value={field.value}
+                                        onChange={(e) => {
+                                            field.onChange(e.value)
+                                        }}
+                                        options={CATEGORIES}
+                                        display='chip'
+                                        filter
+                                        className={`w-full ${errors.categories ? 'p-invalid' : ''}`}
+                                        panelClassName="max-w-full"
+                                        style={{ minWidth: 0, width: '100%' }}/>
+                            </div>
                         )}
                     />
-                    {errors.categories && <small className="p-error">{errors.categories.message}</small>}
+                    {errors.categories && <small className="p-error text-sm">{errors.categories.message}</small>}
                 </div>
 
-                <div>
+                {/* Action buttons */}
+                <div className='flex flex-wrap gap-1 justify-end pt-2 mt-6'>
                     <Button
                         type='button'
                         label='Cancel'
@@ -114,7 +130,7 @@ export const EditFormPopup = ({
                     <Button
                         type='submit'
                         label='Save'
-                        security='success'/>
+                        severity='success'/>
                 </div>
             </form>    
         </Dialog>
