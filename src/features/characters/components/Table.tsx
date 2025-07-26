@@ -26,7 +26,7 @@ export const Table = ({
     onDelete
 }: TableProps) => {
     const categoryBodyTemplate = (character: Character) => (
-        <div>
+        <div className='flex flex-wrap gap-1 justify-start'>
             {character.categories.map((category: string) => (
                 <Chip
                     key={category}
@@ -42,26 +42,33 @@ export const Table = ({
     )
 
     return (
-        <DataTable
-            value={characters}
-            removableSort
-            sortField={sortField}
-            sortOrder={sortOrder}
-            onSort={onSort}>
-            <Column
-                header="Name"
-                field='name'
-                sortable/>
+        <div className="overflow-x-auto max-w-full sm:rounded-md">
+            <DataTable
+                tableClassName="table-fixed min-w-[400px]"
+                value={characters}
+                removableSort
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={onSort}>
+                <Column
+                    style={{ width: '40%' }}
+                    header="Name"
+                    field='name'
+                    bodyClassName='text-ellipsis whitespace-nowrap overflow-hidden'
+                    sortable/>
 
-            <Column
-                header="Category"
-                field='category'
-                body={categoryBodyTemplate}
-                sortable/>
+                <Column
+                    style={{ width: '40%' }}
+                    header="Category"
+                    field='category'
+                    body={categoryBodyTemplate}
+                    sortable/>
 
-            <Column
-                header="Actions"
-                body={actionsBodyTemplate}/>
-        </DataTable>
+                <Column
+                    style={{ width: '120px' }}
+                    header="Actions"
+                    body={actionsBodyTemplate}/>
+            </DataTable>
+        </div>
     )
 }

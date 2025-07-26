@@ -10,16 +10,18 @@ export const Actions = ({
     onDelete
 }: ActionsProps) => {
     return (
-        <div>
+        <div className='flex flex-wrap gap-1 justify-start'>
             <Button
                 label="Edit"
                 severity="secondary"
-                onClick={onEdit}/>
+                onClick={onEdit}
+                className="w-full lg:w-auto"/>
             
             <Button
                 label="Delete"
                 severity="danger"
-                onClick={onDelete}/>
+                onClick={onDelete}
+                className="w-full lg:w-auto"/>
         </div>
     )
 }
