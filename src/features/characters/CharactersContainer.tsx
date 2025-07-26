@@ -11,9 +11,14 @@ import {
 } from './charactersSlice';
 import { Table } from './components/Table';
 import { DeletePopup } from './components/DeletePopup';
-import { Character, CharacterEditForm } from '../../types/character';
 import { EditFormPopup } from './components/EditFormPopup';
-
+import {
+    Character,
+    CharacterEditForm
+} from '../../types/character';
+import { SortOrder } from 'primereact/api';
+import { DataTableStateEvent } from "primereact/datatable";
+import { getSortedCharacters } from '../../utils/get-sorted-characters';
 
 export const CharactersContainer = () => {
     const dispatch = useAppDispatch();
@@ -23,16 +28,20 @@ export const CharactersContainer = () => {
         isUninitialized,
         data
     } = useGetCharactersQuery();
-    const characters = useAppSelector(charactersSelectors.selectAll)
-    
-    const [characterToDelete, setCharacterToDelete] = useState<Character | null>(null);
-    const [characterToEdit, setCharacterToEdit] = useState<Character | null>(null);
 
     useEffect(() => {
-        if (data) {
-            dispatch(charactersReceived(data))
+        if (!data) {
+            return
         }
+
+        dispatch(charactersReceived(data))
     }, [data, dispatch]);
+
+    const characters = useAppSelector(charactersSelectors.selectAll)
+    const [characterToDelete, setCharacterToDelete] = useState<Character | null>(null);
+    const [characterToEdit, setCharacterToEdit] = useState<Character | null>(null);
+    const [sortField, setSortField] = useState<string>('')
+    const [sortOrder, setSortOrder] = useState<SortOrder>(1)
 
     const handleDeleteButtonClick = (character: Character) => {
         setCharacterToDelete(character);
@@ -65,8 +74,12 @@ export const CharactersContainer = () => {
             changes: {
                 ...characterChanges
             } 
-        }
-        ))
+        }))
+    }
+
+    const handleTableSort = (sortEvent: DataTableStateEvent) => {
+        setSortField(sortEvent.sortField)
+        setSortOrder(sortEvent.sortOrder ? sortEvent.sortOrder : 0)
     }
 
     if (isUninitialized || isLoading) {
@@ -92,7 +105,10 @@ export const CharactersContainer = () => {
             }
 
             <Table
-                characters={characters}
+                characters={getSortedCharacters(characters, sortField, sortOrder)}
+                sortField={sortField}
+                sortOrder={sortOrder}
+                onSort={handleTableSort}
                 onEdit={handleEditButtonClick}
                 onDelete={handleDeleteButtonClick} />
         </div>
