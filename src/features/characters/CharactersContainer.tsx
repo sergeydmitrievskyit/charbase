@@ -18,7 +18,7 @@ import {
 } from '../../types/character';
 import { SortOrder } from 'primereact/api';
 import { DataTableStateEvent } from "primereact/datatable";
-import { getSortedCharacters } from '../../utils/get-sorted-characters';
+import { getSortedCharacters } from './utils/get-sorted-characters';
 
 export const CharactersContainer = () => {
     const dispatch = useAppDispatch();

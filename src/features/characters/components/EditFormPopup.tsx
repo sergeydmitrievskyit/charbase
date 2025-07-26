@@ -69,6 +69,7 @@ export const EditFormPopup = ({
                                 }
                             })}
                             className={errors.name ? 'p-invalid' : ''}/>
+                        {errors.name && <small className="p-error">{errors.name.message}</small>}
                     </div>
                 </div>
 
@@ -94,10 +95,13 @@ export const EditFormPopup = ({
                                     field.onChange(e.value)
                                 }}
                                 options={CATEGORIES}
+                                display='chip'
+                                filter
                                 className={fieldState.error ? 'p-invalid' : ''}
                             />
                         )}
                     />
+                    {errors.categories && <small className="p-error">{errors.categories.message}</small>}
                 </div>
 
                 <div>

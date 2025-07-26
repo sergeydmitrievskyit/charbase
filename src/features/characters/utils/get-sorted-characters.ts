@@ -1,4 +1,4 @@
-import { Character } from "../types/character";
+import { Character } from "../../../types/character";
 import { SortOrder } from 'primereact/api';
 
 export const getSortedCharacters = (
