@@ -21,5 +21,6 @@ export const DeletePopup = ({
         icon="pi pi-exclamation-triangle"
         acceptClassName="p-button-danger"
         accept={onAccept}
-        reject={onReject} />
+        reject={onReject}
+        className="w-full max-w-[80vw]"/>
 )
