@@ -51,6 +51,7 @@ export const EditFormPopup = ({
       onHide={handleCancel}
       header={`Edit ${character.name}`}
       modal
+      draggable={false}
       className="w-full max-w-[80vw]"
     >
       <form

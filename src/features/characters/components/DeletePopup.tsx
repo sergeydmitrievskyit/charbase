@@ -23,5 +23,5 @@ export const DeletePopup = ({
     accept={onAccept}
     reject={onReject}
     className="w-full max-w-[80vw]"
-  />
+    draggable={false}/>
 )
