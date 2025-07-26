@@ -1,8 +1,7 @@
-import { CharactersContainer } from './features/characters/CharactersContainer';
-import "./App.css"
+import { CharactersContainer } from "./features/characters/CharactersContainer"
 
 export const App = () => (
-  <div className="App">
+  <div>
     <CharactersContainer />
   </div>
 )

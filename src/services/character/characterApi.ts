@@ -1,31 +1,28 @@
-import {
-    createApi,
-    fetchBaseQuery
-} from '@reduxjs/toolkit/query/react'
-import { Character } from '../../types/character'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import type { Character } from "../../types/character"
 
-interface CharacterResponse {
-    id: number | string; // id - identificator
-    n: string;           // n - name
-    c: string[];         // c - category
+type CharacterDTO = {
+  id: number | string // id - identificator
+  n: string // n - name
+  c: string[] // c - category
 }
-type getCharactersResponseSchema = CharacterResponse[];
+type charactersDTO = CharacterDTO[]
 
 export const characterApi = createApi({
-    reducerPath: 'characterApi',
-    baseQuery: fetchBaseQuery({ baseUrl: '/characters/' }),
-    endpoints: (build) => ({
-        getCharacters: build.query<Character[], void>({
-            query: () => 'characters.json',
-            transformResponse: (response: getCharactersResponseSchema): Character[] => {
-                return response.map((item: CharacterResponse) => ({
-                    id: Number(item.id),
-                    name: item.n,
-                    categories: item.c
-                }));
-            }
-        }),
+  reducerPath: "characterApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/characters/" }),
+  endpoints: build => ({
+    getCharacters: build.query<Character[], undefined>({
+      query: () => "characters.json",
+      transformResponse: (response: charactersDTO): Character[] => {
+        return response.map((item: CharacterDTO) => ({
+          id: Number(item.id),
+          name: item.n,
+          categories: item.c,
+        }))
+      },
     }),
+  }),
 })
 
 export const { useGetCharactersQuery } = characterApi

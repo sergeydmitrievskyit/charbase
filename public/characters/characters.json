@@ -1,5 +1,5 @@
 [
-    { "id": 1, "n": "Alan Wake", "c": ["TPS", "Adventure", "Horror"] },
-    { "id": 2, "n": "Jason Bourne", "c": ["Movie", "Thriller", "Spy"] },
-    { "id": "3", "n": "Bruce Wayne", "c": ["Batman", "Philanthropist", "Orphan"] }
-  ] 
+  { "id": 1, "n": "Alan Wake", "c": ["TPS", "Adventure", "Horror"] },
+  { "id": 2, "n": "Jason Bourne", "c": ["Movie", "Thriller", "Spy"] },
+  { "id": "3", "n": "Bruce Wayne", "c": ["Batman", "Philanthropist", "Orphan"] }
+]
